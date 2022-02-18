@@ -1,10 +1,13 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { config as enviromnentSetup } from "dotenv";
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
+
+enviromnentSetup();
 
 interface Message {
 	hour: string;
@@ -40,6 +43,7 @@ io.on("connection", (socket) => {
 	});
 });
 
-server.listen(1337, () => {
-	console.log("Server started on port 1337");
+const PORT = process.env["PORT"] || 80;
+server.listen(PORT, () => {
+	console.log(`Server started on port ${PORT}!`);
 });
